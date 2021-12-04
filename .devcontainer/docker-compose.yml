@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  app:
+      build:
+        context: ..
+        dockerfile: .devcontainer/Dockerfile
+        args:
+          VARIANT: 16
+      environment:
+        PORT: 3020
+      ports:
+        - 3020:3020
+      volumes:
+        - ..:/workspace
+      user: node
+      command: sleep infinity
+
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_DATABASE: todolist
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
